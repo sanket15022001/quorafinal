@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="account.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css  "></script> 
+    <script src= "https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js "></script> 
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js " ></script>
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg" style="height: 70px; background-color: rgb(11, 7, 66);">
+        <a class="navbar-brand" style="font-weight: 800;color: white;" href="/home">Quora College</a>
+        <button class="navbar-toggler"  type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" style="font-weight: 600;color: white; " href="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+             <% if(user.prof==undefined){%>
+                <img class="im" src="/img/avtar.png" alt="">
+             <% }else{%>
+
+                <img class="im" src="<%=user.prof%>" alt="">
+              <%}%>
+            </li>
+            
+            
+            
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" style="font-weight: 500; color: white;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%=user.name%>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/myposts">My Post</a>
+                <a class="dropdown-item" href="/settings">Settings</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item"  href="/logout">Logout</a>
+              </div>
+            </li>
+            
+            
+            </li>
+          </ul>
+          <!-- <form class="form-inline my-2 my-lg-0" method="POST">
+            <input class="form-control mr-sm-2" type="text" id="searchTitle" onkeyup="showResults(this.value)" placeholder="Search" aria-label="Search">
+            <div class = "hide" id="livesearch">
+              type
+            </div >
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form> -->
+          <form class="form-inline my-2 my-lg-0" action="/home" method="GET">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search" aria-label="Search" required="required"
+            oninvalid="this.setCustomValidity('Enter some text')"
+            oninput="this.setCustomValidity('')">
+            <input class="btn btn-default" type="submit"  value="search" >
+            <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+          </form>
+        </div>
+      </nav>
+      <div class="wrapper bg-white mt-sm-5">
+          <h4 class="pb-4 border-bottom">Account settings</h4>
+          <div class="d-flex align-items-start py-3 border-bottom"> <img src="https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img" alt="">
+            <div class="pl-sm-4 pl-2" id="img-section"> <b>Profile Photo</b>
+                <p>Accepted file type .png. Less than 1MB</p> <button class="btn button border"><b>Upload</b></button>
+            </div>
+        </div>
+        
+        <form action="/userSettings" method="POST">
+            <div class="py-2">
+                <div class="row py-2">
+                    <div class="col-md-6"> <label for="cname"> Name</label> <input type="text"name="cname" class="bg-light form-control" placeholder="Steve"value="<%= user.name%>"> </div>
+                   
+                </div>
+                <div class="row py-2">
+                    <div class="col-md-6"> <label for="email">Email Address</label> <input type="email" class="bg-light form-control" value="<%= user.username%>"readonly> </div>
+                    <div class="col-md-6 pt-md-0 pt-3"> <label for="password">Password</label> <input type="password" name="changePassword1" class="bg-light form-control" placeholder="password"> </div>
+                    <div class="col-md-6 pt-md-0 pt-3"> <label for="password">Confirm Password</label> <input type="password" name="changePassword2" class="bg-light form-control" placeholder="password"> </div>
+                </div>
+                
+                <div class="py-3 pb-4 border-bottom"> <button class="btn btn-primary mr-3">Save Changes</button> <button class="btn border button">Cancel</button> </div>
+                <div class="d-sm-flex align-items-center pt-3" id="deactivate">
+                    <div> <b>Deactivate your account</b>
+                        <p>Details about your company account and password</p>
+                    </div>
+                    <div class="ml-auto"> <button class="btn danger">Deactivate</button> </div>
+                </div>
+            </div>
+
+        </form>
+        
+    </div>
+</body>
+</html>

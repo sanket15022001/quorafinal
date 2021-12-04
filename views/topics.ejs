@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- Library for search -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+</head>
+<body style="background-color:white">
+    <nav class="navbar navbar-expand-lg" style="height: 70px; background-color: rgb(11, 7, 66);">
+        <a class="navbar-brand" style="font-weight: 800;color: white;" href="/home">Quora College</a>
+        <button class="navbar-toggler"  type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" style="font-weight: 600;color: white; " href="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+             <% if(user.prof==undefined){%>
+                <img class="im" src="/img/avtar.png" alt="">
+             <% }else{%>
+
+                <img class="im" src="<%=user.prof%>" alt="">
+              <%}%>
+            </li>
+            
+            
+            
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" style="font-weight: 500; color: white;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%=user.name%>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/myposts">My Post</a>
+                <a class="dropdown-item" href="/settings">Settings</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item"  href="/logout">Logout</a>
+              </div>
+            </li>
+            
+            
+            </li>
+          </ul>
+          <!-- <form class="form-inline my-2 my-lg-0" method="POST">
+            <input class="form-control mr-sm-2" type="text" id="searchTitle" onkeyup="showResults(this.value)" placeholder="Search" aria-label="Search">
+            <div class = "hide" id="livesearch">
+              type
+            </div >
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form> -->
+          <form class="form-inline my-2 my-lg-0" action="/home" method="GET">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search" aria-label="Search" required="required"
+            oninvalid="this.setCustomValidity('Enter some text')"
+            oninput="this.setCustomValidity('')">
+            <input class="btn btn-default" type="submit"  value="search" >
+            <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+          </form>
+        </div>
+      </nav>
+      
+      
+
+
+      <div class="container"  id="container1">
+        <div class="row" >
+          <div class="col-lg-3"  id="col1">
+            <h2 style="color: black;font-family: 'Times New Roman', Times, serif;">Topics</h2>
+            <div class="topics" style="margin-top: 16%;">
+                
+                
+                    <a style="color: black;text-decoration: none;" href="/topic/DSA">
+                      <div class="card" style="width: 16.5rem;height: 12rem;">
+                        <img class="bd-placeholder-img card-img-top" width="100%" height="160" src="/img/dsa1img.png" preserveAspectRatio="xMidYMid slice" role="img"><rect width="100%" height="100%" fill="#868e96"/></img>
+                      
+                        
+                          <h5 class="card-title">DSA</h5>
+                        
+                      </div>
+
+                    </a>
+                   
+                    
+                    
+                
+            </div>
+          </div>
+          <div class="col-lg-6" id="col2">
+            <div >
+                <!-- Trigger/Open The Modal -->
+                <button id="myBtn">What is your question?</button>
+                
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+                
+                  <!-- Modal content -->
+                  <div class="modal-content">
+
+                    <form action="" method="post">
+                        <div class="form-group purple-border">
+                            <span class="close">&times;</span>
+                            
+                              <label for="cars">Choose a Topic:</label>
+                              <select name="cars" id="cars">
+                                <option value="<%=topic%>"><%=topic%></option>
+                                
+                              </select>
+                              <br><br>
+                        
+                            
+                            <label >Question</label>
+                            <textarea class="form-control" name="title" placeholder="Enter question here" id="" rows="1"></textarea>
+                            <label >Description</label>
+                            <textarea class="form-control" name="description" placeholder="Optional or provide a link" id="" rows="3" style="white-space: pre-wrap;"></textarea>
+                            
+                            <button id="1" class=" btn btn-primary " type="submit" >Submit</button>
+                        </div>
+                    </form>
+                  </div>
+                
+                </div>
+                <script>
+                    // Get the modal
+                    var modal = document.getElementById("myModal");
+                    
+                    // Get the button that opens the modal
+                    var btn = document.getElementById("myBtn");
+                    
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+                    
+                    // When the user clicks the button, open the modal 
+                    btn.onclick = function() {
+                      modal.style.display = "block";
+                    }
+                    
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function() {
+                      modal.style.display = "none";
+                    }
+                    
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                      if (event.target == modal) {
+                        modal.style.display = "none";
+                      }
+                    }
+                    </script>
+              
+              </div>
+              <% if(noMatches !== null){%>
+                <div style="margin: auto;"class="card w-75">
+                  <div class="card-body">
+                    <h4 style="text-align: center;"class="card-title"><%= noMatches%></h5>
+                    <p style="text-align: center;" class="card-text">Look for something else</p>
+                    <!-- <a href="/home" class="btn btn-primary">Button</a> -->
+                    <form style="margin-left: 10%" class="form-inline my-2 my-lg-0" action="/home" method="GET">
+                      <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search" aria-label="Search" required="required"
+                      oninvalid="this.setCustomValidity('Enter some text')"
+                      oninput="this.setCustomValidity('')">
+                      <input class="btn btn-default" type="submit"  value="search" >
+                      <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+                    </form>
+                  </div>
+                </div>
+                
+                
+              <%}%>
+             
+           
+            <% var i =0; %>
+            
+              <%  posts.forEach(function(post){   %>
+              <div class="card">
+                <div class="card-body">
+
+                <div class="row" style="box-sizing: border-box;margin-bottom: 5px;">
+                 <% if(post.pof==undefined){%>
+                  <div class="col-lg-1">
+
+                    <img class="in" style="border: black;" src="/img/avtar.png" alt="No profile">
+                  </div>
+              <%}else{%>
+                <div class="col-lg-1">
+
+                  <img 
+                  class="in" src="<%=post.pof%>">
+                </img>
+              </div>
+              <%}%>
+              <div class="col-lg-11" style="margin-top: -4px;" >
+                <div class="">
+
+                  <span style="font-weight: bolder;font-size: small;color: blue; "><%=post.nmae%></span>
+                </div>
+                <div style="margin-top: -5px;">
+    
+                  <span style=" font-size: smaller;" >Topic: <%= post.topic%> ,  <%=post.time%></span>
+                </div>
+            </div>
+          </div>
+                    
+                    <h5 ><%= post.title%></h5>
+                    <p ><%= post.content %> </p>
+                     
+                    <% for(var i = 0; i < user.postLiked.length;i++) {%>
+                      <% var liked = user.postLiked[i]; %> 
+                      <% var flag =false; %> 
+                      <% if(liked.idOfPost == post._id){ %>
+                       <% flag = true; %>
+                       <% break; %> 
+                        <% } %>  
+                    
+                 <%   }   %> 
+                 <div class="row">
+                   <div class="col">
+                 <%  if(flag == true){   %>
+
+                        <form method="POST" action="/toggleLikePost/<%=post._id%>" data-postId="<%=post._id%> ">
+                          <div id="mydiv" data-test='<%= user.username %>' >
+                            <button type="submit" style="background: none; border: none;outline: none;">
+                            <i name="like" id="123"  class="fa fa-thumbs-up blue" type="submit"></i>
+                            </button>
+                            <p style="display: inline;"><%= post.likeCount %></p>
+                          </div>
+                        </form>
+                        <% } else{   %>
+                          <form method="POST" action="/toggleLikePost/<%=post._id%>" data-postId="<%=post._id%> ">
+                            <div id="mydiv" data-test='<%= user.username %>' >
+                              <button type="submit" style="background: none; border: none;outline: none;">
+                              <i name="like" id="123"  class="fa fa-thumbs-up" type="submit"></i>
+      
+                              </button>
+                              <p style="display: inline;"><%= post.likeCount %></p>
+                    
+                            </div>
+                          </form>
+                          <% }   %>
+                      </div>
+                      <% comments.forEach(function(comment){  %>
+                        <% if(comment.postID == post._id) %>
+                         <% post.commentCount++ })%>
+
+                     
+                      <div class="col" style="margin-right: 53%;position: relative;">
+                        <button id="<%=post._id%>" name="commentButton" class="commentBox" data-postId="<%=post._id%>" onclick=" comment(this)" style="background-color: transparent; border: none; text-decoration: none;"><i class="far fa-comment"></i></button>
+                        <p style="display: inline;"><%= post.commentCount %></p>
+                      </div>
+                  </div>
+
+                     <hr>
+                 <!-- comment box -->
+
+                   
+                      
+                  
+                    <section id="c<%=post._id%>" data-postId="<%=post._id%>" class="hide" >
+                      
+                     <form action="/comment/<%=post._id%>" id="prospects_form" class="add_category_form" method="post" data-postId="<%=post._id%> " style="margin-right: 2%;">
+                        
+                        <div class="d-flex flex-row align-items-start"> <p>
+                  
+                          <% if(user.pof==undefined){%>
+                           <img class="in" src="/img/avtar.png" alt="No profile">
+                       <%}else{%>
+                         <img 
+                           class="in" src="<%=user.pof%>">
+                         </img>
+                       <%}%>
+                         
+                     
+                         </p>
+                          <textarea id="input_category_name" name="inputComment" class="form-control ml-1 shadow-none textarea ansSection" style="  background-color: white;resize: none;" placeholder="Add your answer"></textarea>
+                          
+                        </div>
+                        <div class="mt-2 text-right">
+                          <button class="btn btn-outline-dark"type="submit">Post comment  </button>
+                        </div>
+                      </form>
+                      <hr>
+                      <div>
+                        
+                        
+                        <% comments.forEach(function(comment){  %>
+                          <% if(comment.postID == post._id) {%>
+                           
+                            <div >
+
+                              <div class="row" style="box-sizing: border-box;margin-bottom: 5px;">
+                                <% if(comment.image==undefined){%>
+                                 <div class="col-lg-1">
+               
+                                   <img class="in" style="border: black;" src="/img/avtar.png" alt="No profile">
+                                 </div>
+                             <%}else{%>
+                               <div class="col-lg-1">
+               
+                                 <img 
+                                 class="in" src="<%=comment.image%>">
+                               </img>
+                             </div>
+                             <%}%>
+                             <div class="col-lg-9" style="margin-top: -4px;" >
+                               <div class="">
+               
+                                 <span style="font-weight: bolder;font-size: small;color: blue; "><%=comment.name%></span>
+                               </div>
+                               <div style="margin-top: -5px;">
+                   
+                                 <span style=" font-size: smaller;" ><%=comment.time%></span>
+                               </div>
+                           </div>
+                           <div class="col-lg-2">
+                            <%if(user.username==comment.email){%>
+                              <form action="/cdelete/<%=comment._id%>"  class="add_category_form " method="post" data-postId="<%=comment._id%> " style="margin-right: 2%;">
+       
+                                <div class="col"> <button id="delete"type="submit" onclick="return ondelete(this)" style="border: none; background: transparent;outline:none;margin-right: 5%;"><span class="fas fa-trash">
+                               
+                                </span></button></div>
+                                </form>
+                              <%}%>
+                           </div>
+                         </div>
+                                
+                            </div>
+                                <p> <%= comment.text %> </p>
+                                <% for(var i = 0; i < user.commentLiked.length;i++) {%>
+                                  <% var liked1 = user.commentLiked[i]; %> 
+                                  <% var flag1 =false; %> 
+                                  <% console.log(liked1 + comment._id) %>
+                                  <% if(liked1 == comment._id){ %>
+                                   <% flag1 = true; %>
+                                   <% break; %> 
+                                    <% } %>  
+                                
+                             <%   }   %> 
+                                <div class="col">
+                                  <%  if(flag1 == true){   %>
+                 
+                                         <form method="POST" action="/toggleLikeComment/<%=comment._id%>" data-postId="<%=comment._id%> ">
+                                           <div id="mydiv" data-test='<%= user.username %>' >
+                                             <button type="submit" style="background: none; border: none;outline: none;">
+                                             <i name="cliked" id="c"  class="fa fa-thumbs-up blue" type="submit"></i>
+                                             </button>
+                                             <p style="display: inline;"><%= comment.likeCount %></p>
+                                           </div>
+                                         </form>
+                                         <% } else{   %>
+                                           <form method="POST" action="/toggleLikeComment/<%=comment._id%>" data-postId="<%=comment._id%> ">
+                                             <div id="mydiv" data-test='<%= user.username %>' >
+                                               <button type="submit" style="background: none; border: none;outline: none;">
+                                               <i name="cliked" id="c"  class="fa fa-thumbs-up" type="submit"></i>
+                                               </button>
+                                               <p style="display: inline;"><%= comment.likeCount %></p>
+                                             </div>
+                                           </form>
+                                           <% }   %>
+                                       </div>
+                           <hr>
+                              
+                              <% } %> 
+                              
+                              <% }); %>
+                             
+                          </div> 
+                          
+                        </section>
+                          <%i++%>
+                  </div>
+                </div>
+                  <%})%>
+             
+            </div>
+            <div class="col-lg-3"id="col3">
+            One of three columns
+          </div>
+        </div>
+      </div>
+     
+      <script> 
+        function ondelete(id){
+          var doc;
+            var result = confirm("Do you want to delete this post!");
+            if (result == true) {
+                return true;
+            } else {
+                    
+                          return false;
+                          
+            }
+        }
+        function comment(id){
+          var v=id.dataset.postid;
+        
+          $("#c"+v).toggle();
+          
+        }
+     
+       
+       
+      </script>
+     
+      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div id="fb-root"></div>
+</body>
+</html>
